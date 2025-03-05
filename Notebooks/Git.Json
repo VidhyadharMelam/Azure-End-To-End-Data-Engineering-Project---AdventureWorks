@@ -1,0 +1,52 @@
+[
+    {
+        "P_Relative_URL": "anshlamba03/Adventure-Works-Data-Engineering-Project/main/Data/AdventureWorks_Product_Categories.csv",
+        "P_Sink_Folder": "AdventureWorks_Product_Categories",
+        "P_File_Name": "AdventureWorks_Product_Categories.csv"
+    },
+    {
+        "P_Relative_URL": "anshlamba03/Adventure-Works-Data-Engineering-Project/main/Data/AdventureWorks_Calendar.csv",
+        "P_Sink_Folder": "AdventureWorks_Calendar",
+        "P_File_Name": "AdventureWorks_Calendar.csv"
+    },
+    {
+        "P_Relative_URL": "anshlamba03/Adventure-Works-Data-Engineering-Project/main/Data/AdventureWorks_Customers.csv",
+        "P_Sink_Folder": "AdventureWorks_Customers",
+        "P_File_Name": "AdventureWorks_Customers.csv"
+    },
+    {
+        "P_Relative_URL": "anshlamba03/Adventure-Works-Data-Engineering-Project/main/Data/AdventureWorks_Product_Subcategories.csv",
+        "P_Sink_Folder": "Product_Subcategories",
+        "P_File_Name": "AdventureWorks_Product_Subcategories.csv"
+    },
+    {
+        "P_Relative_URL": "anshlamba03/Adventure-Works-Data-Engineering-Project/main/Data/AdventureWorks_Products.csv",
+        "P_Sink_Folder": "AdventureWorks_Products",
+        "P_File_Name": "AdventureWorks_Products.csv"
+    },
+    {
+        "P_Relative_URL": "anshlamba03/Adventure-Works-Data-Engineering-Project/main/Data/AdventureWorks_Returns.csv",
+        "P_Sink_Folder": "AdventureWorks_Returns",
+        "P_File_Name": "AdventureWorks_Returns.csv"
+    },
+    {
+        "P_Relative_URL": "anshlamba03/Adventure-Works-Data-Engineering-Project/main/Data/AdventureWorks_Sales_2015.csv",
+        "P_Sink_Folder": "AdventureWorks_Sales_2015",
+        "P_File_Name": "AdventureWorks_Sales_2015.csv"
+    },
+    {
+        "P_Relative_URL": "anshlamba03/Adventure-Works-Data-Engineering-Project/main/Data/AdventureWorks_Sales_2016.csv",
+        "P_Sink_Folder": "AdventureWorks_Sales_2016",
+        "P_File_Name": "AdventureWorks_Sales_2016.cvsv"
+    },
+    {
+        "P_Relative_URL": "anshlamba03/Adventure-Works-Data-Engineering-Project/main/Data/AdventureWorks_Sales_2017.csv",
+        "P_Sink_Folder": "AdventureWorks_Sales_2017",
+        "P_File_Name": "AdventureWorks_Sales_2017.csv"
+    },
+    {
+        "P_Relative_URL": "anshlamba03/Adventure-Works-Data-Engineering-Project/main/Data/AdventureWorks_Territories.csv",
+        "P_Sink_Folder": "AdventureWorks_Territories",
+        "P_File_Name": "AdventureWorks_Territories.csv"
+    }
+]
