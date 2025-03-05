@@ -1,0 +1,136 @@
+Azure Resources Setup for AdventureWorks Data Pipeline:
+
+Overview:
+A step-by-step approach to setting up the necessary Azure resources to build an end-to-end data pipeline for the AdventureWorks dataset. The setup includes:
+
+1) Azure Data Factory (ADF) – For data ingestion
+2) Azure Data Lake Storage Gen2 (ADLS Gen2) – For data storage
+3) Azure Databricks – For data transformation
+4) Azure Synapse Analytics – For data warehousing
+
+Step-by-Step Setup Guide:
+
+1️) Create an Azure Storage Account (ADLS Gen2):
+Purpose: Store raw, cleaned, and transformed data in a hierarchical structure.
+
+Steps:
+
+	Go to Azure Portal → Search Storage Account → Click Create.
+	Subscription: Select your subscription.
+	Resource Group: Create a new one or select an existing one.
+	Storage Account Name: Enter a unique name.
+	Region: Select a region closest to your users.
+	Performance: Standard.
+	Redundancy: Select Locally Redundant Storage (LRS).
+	Enable Hierarchical Namespace (for ADLS Gen2).
+	Click Review + Create → Click Create.
+
+Create Containers in ADLS Gen2:
+
+	Go to the Storage Account → Containers.
+	Click + Container → Name it bronze for raw data.
+	Repeat to create silver (cleaned data) and gold (aggregated data).
+
+2️) Set Up Azure Data Factory (ADF):
+Purpose: Extract data from the AdventureWorks API and load it into ADLS Gen2.
+
+Steps:
+
+	Go to Azure Portal → Search Data Factory → Click Create.
+	Subscription & Resource Group: Use the same as the Storage Account.
+	Region: Select the same region as ADLS Gen2.
+	Name: Enter a unique name.
+	Version: Choose V2 (latest version).
+	Click Review + Create → Click Create.
+
+Create Linked Services in ADF:
+
+	Go to Manage → Linked Services → + New.
+	Select HTTP → Configure API URL, Authentication, and Headers.
+	Select Azure Data Lake Storage Gen2 → Connect using Managed Identity.
+	Click Test Connection → Create.
+
+3️) Deploy Azure Databricks:
+Purpose: Transform and clean raw data into usable formats.
+
+Steps:
+
+	Go to Azure Portal → Search Azure Databricks → Click Create.
+	Subscription & Resource Group: Select existing ones.
+	Workspace Name: Enter a unique name.
+	Region: Same as ADLS Gen2.
+	Pricing Tier: Choose Standard.
+	Click Review + Create → Create.
+
+Create a Databricks Cluster:
+
+	Open Databricks Workspace.
+	Go to Clusters → Create Cluster.
+	Select Single Node or Multi-Node based on requirements.
+	Choose Databricks Runtime Version (latest).
+	Set Worker Type and Driver Type.
+	Click Create Cluster.
+
+Connect Databricks to ADLS Gen2:
+
+	Create a Service Principal in Azure Active Directory.
+	Assign Storage Blob Data Contributor role to the Service Principal.
+	Use a Mount Point in Databricks to access ADLS Gen2:
+
+	dbutils.fs.mount(
+    	source="wasbs://bronze@adventureworksdatalake.blob.core.windows.net/",
+    	mount_point="/mnt/bronze",
+    	extra_configs={"fs.azure.account.key.adventureworksdatalake.blob.core.windows.net": "your-access-key"})
+
+4️) Set Up Azure Synapse Analytics: DWH
+Purpose: Store processed data for reporting and BI.
+
+Steps:
+
+	Go to Azure Portal → Search Synapse Analytics → Click Create.
+	Subscription & Resource Group: Select existing ones.
+	Workspace Name: Enter a unique name
+	Region: Same as ADLS Gen2.
+	Enable Data Lake Storage and select your ADLS Gen2 account.
+	Click Review + Create → Create.
+
+Connect Synapse to ADLS Gen2:
+
+	Open Synapse Studio → Manage → Linked Services.
+	Click + New → Select Azure Data Lake Storage Gen2.
+	Provide Storage Account Name and Authentication Method.
+	Click Test Connection → Create.
+
+Create External Tables in Synapse:
+
+-------------------------------------
+----CREATE EXTERNAL TABLE EXTTABLE---
+-------------------------------------
+
+CREATE EXTERNAL TABLE gold.extsales
+WITH
+(
+    LOCATION = 'extsales',
+    DATA_SOURCE = source_gold,
+    FILE_FORMAT = format_parquet
+)
+AS
+SELECT * FROM gold.sales
+
+----Query The External Table----
+SELECT * FROM gold.extsales
+
+5️) Connect Power BI for Reporting:
+Purpose: Visualize data for business insights.
+
+Steps:
+
+	Open Power BI Desktop.
+	Click Get Data → Choose Azure Synapse Analytics.
+	Enter Server Name and Database Name.
+	Click Connect → Load Tables into Power BI.
+	Create Dashboards & Reports.
+
+6) Final Architecture Overview
+
+[AdventureWorks API] → [ADF] → [ADLS Gen2 (Bronze)] → [Databricks] → [ADLS Gen2 (Silver)] → [Synapse (Gold)] → [Power BI]
