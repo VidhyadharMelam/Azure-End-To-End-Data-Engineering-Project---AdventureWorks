@@ -1,0 +1,39 @@
+Data Transformation: AdventureWorks Data Processing
+
+Overview:
+How raw data from the AdventureWorks API was transformed into structured, high-quality data for analytics and reporting. The transformation process follows the Medallion Architecture (Bronze → Silver → Gold), ensuring data quality, consistency, and efficiency.
+
+1) Bronze Layer – Stores raw data without modifications.
+2) Silver Layer – Cleansed, structured, and enriched business-ready data.
+3) Gold Layer – Aggregated data optimized for reporting.
+
+Data Transformation Process:
+
+1️) Bronze Layer (Raw Data Storage – ADLS Gen2)
+	Data Source: JSON data from AdventureWorks API
+	Storage Format: JSON files partitioned by date
+
+Issues with Raw Data:
+	Missing or null values
+	Inconsistent data types
+	Duplicates
+	Complex JSON structures
+
+2️) Silver Layer (Data Cleansing & Enrichment – Databricks & ADLS Gen2)
+Tool Used: Azure Databricks (Apache Spark)
+
+Transformations Applied:
+	1) Schema Enforcement: Converts JSON into structured tabular format.
+	2) Handling Missing Values: Uses default values or removes incomplete records.
+	3) Data Type Standardization: Converts numbers, dates, and Boolean values correctly.
+	4) Flattening JSON Structures: Extracts nested fields into relational tables.
+	5) Deduplication: Removes duplicate records based on CustomerID & OrderID.
+	6) Deriving New Columns: Extracts insights like customer lifetime value (CLV), first purchase date, and frequency of orders.
+
+3️) Gold Layer (Aggregated Data – Azure Synapse Analytics)
+Tool Used: Azure Synapse Analytics
+
+Business-Level Aggregations:
+	Sales Summary: Total revenue, average order value, sales trends.
+	Customer Segmentation: Identifies high-value customers.
+	Product Performance: Top-selling products, revenue contribution.
