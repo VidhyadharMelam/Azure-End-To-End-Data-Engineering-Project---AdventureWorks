@@ -1,0 +1,47 @@
+Medallion Architecture: Data Processing Layers
+
+1) Bronze Layer (Raw Data) - Azure Data Lake Storage (ADLS Gen2)
+	Purpose: Store raw, unprocessed data exactly as ingested from the AdventureWorks source (OLTP database via API).
+
+	Data Characteristics:
+	Contains raw, unstructured, or semi-structured data.
+	Data is stored in its original format.
+	No transformations or cleaning applied yet.
+
+Implementation:
+
+	Azure Data Factory (ADF) extracts raw data and loads it into Azure Data Lake Storage (ADLS Gen2 - Bronze Layer).
+	Data is stored in partitioned folders based on date and category (e.g., Sales, Customers, Products).
+
+2) Silver Layer (Cleaned & Processed Data) - Databricks + ADLS Gen2
+	Purpose: Clean, transform, and standardize data for analytical processing.
+
+	Data Processing Steps:
+	Deduplication, missing value handling, and schema enforcement.
+	Normalization and standardization of fields (e.g., date formats, currency conversions).
+	Data joins to create enriched datasets (e.g., joining Sales and Customer tables).
+
+Implementation:
+
+	Azure Databricks (Apache Spark) is used for ETL processing.
+	Cleaned and structured data is stored back into ADLS Gen2 - Silver Layer in Parquet format for better performance.
+	Data partitioning is applied for optimized querying.
+
+3️) Gold Layer (Aggregated & Analytics-Ready Data) - Azure Synapse Analytics
+	Purpose: Stored curated, aggregated, and query-optimized data for BI & reporting.
+
+Data Processing Steps:
+	Fact & Dimension modeling (Star Schema).
+	Business aggregations (e.g., total sales per region, top customers).
+
+Implementation:
+
+	Azure Synapse Analytics (Serverless SQL Pools) stores structured, analytics-ready data.
+	Gold data is queried directly in Power BI for real-time reports and dashboards.
+
+Why Medallion Architecture?
+	Scalability: Handles raw, cleaned, and aggregated data efficiently.
+	Data Quality: Ensures proper validation before analysis.
+	Performance: Optimized for fast queries and BI reporting.
+	Flexibility: Can support both batch and real-time processing.
+
