@@ -1,0 +1,114 @@
+Data Ingestion Pipeline: AdventureWorks API using Azure Data Factory
+
+Overview:
+
+A detailed explanation of how data from the AdventureWorks API was ingested using Azure Data Factory (ADF). The ingestion process ensures scalability, automation, and reliability by extracting, transforming, and loading raw data into Azure Data Lake Storage Gen2 (ADLS Gen2 - Bronze Layer).
+
+Goal:
+
+	The primary goal of this data ingestion pipeline is to automate the extraction of data from an external API and store it in a structured format for further 	processing. This allows for:
+
+	Real-time or scheduled ingestion
+
+	Efficient data storage
+
+	Reliable and scalable processing
+
+	Seamless integration with downstream analytics tools
+
+Data Ingestion Process:
+
+1️) Data Source: AdventureWorks API
+
+	Source: AdventureWorks REST API
+
+	Data Type: JSON
+
+	Authentication: API Key-based authentication
+
+Data Challenges:
+
+	Handling rate limits and pagination
+
+	Managing missing fields and null values
+
+	Incremental loading to avoid duplicate records
+
+2️) Data Ingestion: Azure Data Factory (ADF)
+
+	The ADF pipeline was designed to automate the extraction, transformation, and loading (ETL) of AdventureWorks API data into Azure Data Lake Storage Gen2 (ADLS 	Gen2).
+
+Pipeline Components:
+
+	Linked Services: Connects ADF to the API endpoint and ADLS Gen2 storage.
+
+	Datasets: Defines JSON data schema for API responses.
+
+	Copy Activity: Extracts data from the API and loads it into the Bronze Layer.
+
+	ForEach Activity: Iterates through multiple API endpoints.
+
+	Incremental Load Mechanism: Uses watermarking to fetch only new or updated records.
+
+	Triggers: Configured to run at 15-minute intervals for near real-time ingestion.
+
+	Error Handling & Logging: Stores logs in Azure Monitor and ADLS Gen2 for debugging.
+
+3️) Data Storage: Azure Data Lake Storage Gen2 (Bronze Layer)
+
+	Raw API data is stored without transformation to maintain data integrity.
+
+	File format: JSON/Parquet for optimized storage and query performance.
+
+	Partitioning based on date and data type for efficient retrieval.
+
+Step-by-Step Implementation:
+
+	Step 1: Create Linked Services
+
+	Linked Service 1: API Connection (HTTP)
+
+	Linked Service 2: ADLS Gen2 (Storage Account)
+
+Step 2: Define Datasets
+
+	Dataset 1: API Source (JSON Format)
+
+	Dataset 2: ADLS Destination (Parquet Format)
+
+Step 3: Develop ADF Pipeline
+
+	Copy Activity: Extracts data from the API.
+
+	ForEach Loop: Iterates over multiple API endpoints.
+
+	Mapping & Schema: Ensures consistent data structure.
+
+	Error Handling: Captures API failures & stores logs in ADLS.
+
+	Triggers: Schedules pipeline execution every 15 minutes.
+
+Step 4: Deploy & Monitor
+
+	Deployed pipeline using Azure ADF
+
+	Monitored data ingestion through Azure Monitor & Log Analytics.
+
+	Challenges & Solutions:
+
+	API Rate Limits : Implemented retry mechanism with exponential backoff
+
+	Handling Large Data Volumes : Used incremental loading & partitioning strategies
+
+	Data Quality Issues : Applied validation checks in Databricks (Silver Layer)
+
+	Pipeline Failures : Configured automated alerts & logging
+
+
+Business Impact
+
+	Automated real-time ingestion to support analytics.
+	Improved data quality & governance with structured storage.
+	Scalable architecture for future business expansion.
+	Optimized processing for efficient BI reporting.
+
