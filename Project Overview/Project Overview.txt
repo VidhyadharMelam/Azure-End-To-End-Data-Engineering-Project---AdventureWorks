@@ -1,0 +1,40 @@
+Goal:
+The objective of this project is to design and implement a scalable, real-time data engineering pipeline using Microsoft Azure services. The pipeline processes data from the AdventureWorks dataset, transforming it into a structured format for analytics and reporting.
+
+Business Problem:
+AdventureWorks, a fictional multinational bicycle manufacturer, needs a centralized data solution to:
+
+	1) Consolidate data from multiple sources.
+	2) Improve data quality, transformation, and reporting.
+	3) Enable real-time analytics for business insights.
+	4) Support Power BI dashboards for decision-making.
+
+Solution Architecture:
+To address these challenges, built an end-to-end data pipeline using:
+
+1) Data Source (AdventureWorks Database - HTTP API)
+
+	Extracted Calendar, Customers, Product_Categories, Product_SubCategories, Products, Returns, Sales_2015, Sales_2016, Sales_2017, Territoriessales data from the 	AdventureWorks OLTP database via an API.
+
+2) Data Ingestion (Azure Data Factory - ADF)
+
+	Used ADF pipelines to fetch data and load it into Azure Data Lake Storage (ADLS Gen2 - Bronze Layer).
+
+3) Raw Data Storage (Bronze Layer - ADLS Gen2)
+
+	Stored raw, unprocessed data in Azure Data Lake Storage (ADLS Gen2) for durability and future processing.
+
+4) Data Processing & Transformation (Silver Layer - Databricks & Spark)
+
+	Used Azure Databricks (Apache Spark) to clean, transform, and enrich the data.
+	Removed duplicates, handled missing values, and applied business rules.
+	Saved processed data back to ADLS Gen2 (Silver Layer).
+
+5) Data Warehouse (Gold Layer - Azure Synapse Analytics)
+
+	Loaded structured data into Azure Synapse Analytics for efficient querying & analytics.
+	Created fact and dimension tables for optimized data modeling.
+
+7)Data Visualization & Reporting (Power BI)
+
+	Connected Power BI to Azure Synapse Analytics for interactive dashboards.
